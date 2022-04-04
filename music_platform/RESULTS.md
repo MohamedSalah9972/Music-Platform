@@ -1,4 +1,4 @@
-#Shell queries
+# Shell queries
 Use the following command to use the shell
 ```
 python3 manage.py shell
