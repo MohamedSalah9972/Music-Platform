@@ -75,3 +75,31 @@ for artist in queryset:
 5 zpit https://www.facebook.com/zpit
 18 zyev https://www.facebook.com/zyev
 ```
+
+## List down all artists whose stage name starts with
+
+List down all artists whose stage name starts with 'a' with the following commands:
+
+```
+from artists.models import Artist
+queryset = Artist.objects.all().filter(stage_name__startswith='a')
+for artist in queryset:
+    print(artist.id, artist.stage_name, artist.social_link)
+```
+
+### Results(id, stage name, social link)
+
+```
+6 aspl https://www.facebook.com/aspl
+```
+
+## Get the latest released album
+
+Get the latest released album with the following commands:
+
+```
+from albums.models import Album
+obj = Album.objects.all().latest('release_datetime')
+print(obj.name, obj.release_datetime, obj.cost)
+```
+
