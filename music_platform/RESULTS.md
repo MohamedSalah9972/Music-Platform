@@ -1,52 +1,14 @@
-#Shell queries
-Use the following command to use the shell
 ```
-python3 manage.py shell
-```
-## Create some random artists
-After run the shell command, create some random artists with the following commands:
+
+## List down all artists sorted by stage name
+List down all artists sorted by stage name with the following commands:
 ```
 from artists.models import Artist
-import string
-import random
-for i in range(20):
-    letters = string.ascii_lowercase
-    stage_name = ''.join(random.choice(letters) for _ in range(4))
-    social_link = "https://www.facebook.com/" + stage_name
-    Artist.objects.create(stage_name=stage_name, social_link=social_link)
-```   
-### results of the query
-````
-<Artist: Artist object (1)>
-<Artist: Artist object (2)>
-<Artist: Artist object (3)>
-<Artist: Artist object (4)>
-<Artist: Artist object (5)>
-<Artist: Artist object (6)>
-<Artist: Artist object (7)>
-<Artist: Artist object (8)>
-<Artist: Artist object (9)>
-<Artist: Artist object (10)>
-<Artist: Artist object (11)>
-<Artist: Artist object (12)>
-<Artist: Artist object (13)>
-<Artist: Artist object (14)>
-<Artist: Artist object (15)>
-<Artist: Artist object (16)>
-<Artist: Artist object (17)>
-<Artist: Artist object (18)>
-<Artist: Artist object (19)>
-<Artist: Artist object (20)>
-````
-## List down all artists
-List down all artists with the following commands:
-```
-from artists.models import Artist
-queryset = Artist.objects.all()
+queryset = Artist.objects.all().order_by('stage_name')
 for artist in queryset:
     print(artist.id, artist.stage_name, artist.social_link)
 ```
-### Results (id, stage name, social link)
+## Results(id, stage name, social link)
 ```
 6 aspl https://www.facebook.com/aspl
 10 gctw https://www.facebook.com/gctw
@@ -68,5 +30,18 @@ for artist in queryset:
 17 yptb https://www.facebook.com/yptb
 5 zpit https://www.facebook.com/zpit
 18 zyev https://www.facebook.com/zyev
+```
 
+# List down all artists whose stage name starts with 'a'
+List down all artists whose stage name starts with 'a' with the following commands:
+```
+from artists.models import Artist
+queryset = Artist.objects.all().filter(stage_name__startswith='a')
+for artist in queryset:
+    print(artist.id, artist.stage_name, artist.social_link)
+```
+
+## Results(id, stage name, social link)
+```
+6 aspl https://www.facebook.com/aspl
 ```
