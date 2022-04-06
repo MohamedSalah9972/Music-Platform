@@ -103,3 +103,39 @@ obj = Album.objects.all().latest('release_datetime')
 print(obj.name, obj.release_datetime, obj.cost)
 ```
 
+```python
+from artists.models import Artist
+from albums.models import Album
+import datetime
+for i in range(20):
+    rand_artist = Artist.objects.order_by('?').first()
+    rand_artist.albums.create(
+    name="album"+str(i),
+    release_datetime=datetime.date(2020, 1, i+1),
+    cost = 123/(i+1)
+    )
+```
+
+### Result of query:
+```shell
+<Album: Album object (61)>
+<Album: Album object (62)>
+<Album: Album object (63)>
+<Album: Album object (64)>
+<Album: Album object (65)>
+<Album: Album object (66)>
+<Album: Album object (67)>
+<Album: Album object (68)>
+<Album: Album object (69)>
+<Album: Album object (70)>
+<Album: Album object (71)>
+<Album: Album object (72)>
+<Album: Album object (73)>
+<Album: Album object (74)>
+<Album: Album object (75)>
+<Album: Album object (76)>
+<Album: Album object (77)>
+<Album: Album object (78)>
+<Album: Album object (79)>
+<Album: Album object (80)>
+```
