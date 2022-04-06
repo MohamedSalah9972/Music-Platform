@@ -76,7 +76,7 @@ for artist in queryset:
 18 zyev https://www.facebook.com/zyev
 ```
 
-## List down all artists whose stage name starts with
+## List down all artists whose stage name starts with 'a'
 
 List down all artists whose stage name starts with 'a' with the following commands:
 
