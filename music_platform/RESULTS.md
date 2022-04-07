@@ -237,3 +237,59 @@ for i in queryset:
 99 album18 2020-01-19
 100 album19 2020-01-20
 ```
+
+## Get all albums released today or before but not after today
+Get all albums released today or before but not after today with the following commands:
+
+```python
+from albums.models import Album
+import datetime
+queryset = Album.objects.filter(release_datetime__lte=datetime.date.today())
+
+for i in queryset:
+    print(i.id, i.name, i.release_datetime)
+```
+
+### Results
+```shell
+61 album0 2020-01-01
+62 album1 2020-01-02
+63 album2 2020-01-03
+64 album3 2020-01-04
+65 album4 2020-01-05
+66 album5 2020-01-06
+67 album6 2020-01-07
+68 album7 2020-01-08
+69 album8 2020-01-09
+70 album9 2020-01-10
+71 album10 2020-01-11
+72 album11 2020-01-12
+73 album12 2020-01-13
+74 album13 2020-01-14
+75 album14 2020-01-15
+76 album15 2020-01-16
+77 album16 2020-01-17
+78 album17 2020-01-18
+79 album18 2020-01-19
+80 album19 2020-01-20
+81 album0 2020-01-01
+82 album1 2020-01-02
+83 album2 2020-01-03
+84 album3 2020-01-04
+85 album4 2020-01-05
+86 album5 2020-01-06
+87 album6 2020-01-07
+88 album7 2020-01-08
+89 album8 2020-01-09
+90 album9 2020-01-10
+91 album10 2020-01-11
+92 album11 2020-01-12
+93 album12 2020-01-13
+94 album13 2020-01-14
+95 album14 2020-01-15
+96 album15 2020-01-16
+97 album16 2020-01-17
+98 album17 2020-01-18
+99 album18 2020-01-19
+100 album19 2020-01-20
+```
