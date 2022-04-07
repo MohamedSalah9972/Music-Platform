@@ -7,7 +7,7 @@ python3 manage.py shell
 ## Create some random artists
 
 After run the shell command, create some random artists with the following commands:
-```
+```python
 from artists.models import Artist
 import string
 import random
@@ -43,7 +43,7 @@ for i in range(20):
 ## List down all artists
 
 List down all artists with the following commands:
-```
+```python
 from artists.models import Artist
 queryset = Artist.objects.all()
 for artist in queryset:
@@ -80,7 +80,7 @@ for artist in queryset:
 
 List down all artists whose stage name starts with 'a' with the following commands:
 
-```
+```python
 from artists.models import Artist
 queryset = Artist.objects.all().filter(stage_name__startswith='a')
 for artist in queryset:
@@ -97,7 +97,7 @@ for artist in queryset:
 
 Get the latest released album with the following commands:
 
-```
+```python
 from albums.models import Album
 obj = Album.objects.all().latest('release_datetime')
 print(obj.name, obj.release_datetime, obj.cost)
