@@ -293,3 +293,15 @@ for i in queryset:
 99 album18 2020-01-19
 100 album19 2020-01-20
 ```
+
+## Count the total number of albums released so far
+Count the total number of albums released so far with the following commands:
+
+```python
+from albums.models import Album
+Album.objects.count()
+```
+### Results
+```shell
+40
+```
