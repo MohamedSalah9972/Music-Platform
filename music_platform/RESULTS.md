@@ -93,15 +93,7 @@ for artist in queryset:
 6 aspl https://www.facebook.com/aspl
 ```
 
-## Get the latest released album
 
-Get the latest released album with the following commands:
-
-```python
-from albums.models import Album
-obj = Album.objects.all().latest('release_datetime')
-print(obj.name, obj.release_datetime, obj.cost)
-```
 ## Create some albums and assign them to any artists (1st way)
 ```python
 from artists.models import Artist
@@ -152,4 +144,41 @@ for i in range(20):
         release_datetime=datetime.date(2020, 1, i+1),
         cost = 123/(i+1)
     )
+```
+
+### Result of query:
+```shell
+<Album: Album object (81)>
+<Album: Album object (82)>
+<Album: Album object (83)>
+<Album: Album object (84)>
+<Album: Album object (85)>
+<Album: Album object (86)>
+<Album: Album object (87)>
+<Album: Album object (88)>
+<Album: Album object (89)>
+<Album: Album object (90)>
+<Album: Album object (91)>
+<Album: Album object (92)>
+<Album: Album object (93)>
+<Album: Album object (94)>
+<Album: Album object (95)>
+<Album: Album object (96)>
+<Album: Album object (97)>
+<Album: Album object (98)>
+<Album: Album object (99)>
+<Album: Album object (100)>
+```
+
+## Get the latest released album
+Get the latest released album with the following commands:
+
+```python
+from albums.models import Album
+obj = Album.objects.all().latest('release_datetime')
+print(obj.id, obj.name, obj.release_datetime, obj.cost)
+```
+### results(id, name, released date, cost):
+```shell
+80 album19 2020-01-20 6.15
 ```
