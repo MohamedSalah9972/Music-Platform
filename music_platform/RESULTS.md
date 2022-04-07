@@ -305,3 +305,78 @@ Album.objects.count()
 ```shell
 40
 ```
+
+## For each artist, list down all of his/her albums (1st way)
+For each artist, list down all of his/her albums with the following commands:
+
+```python
+from albums.models import Album
+from artists.models import Artist
+queryset = Artist.objects.all()
+for artist in queryset:
+    albums = Album.objects.filter(artist_id=artist.pk) # what if the pk isn't the id (use artist=artist?)Ï
+```
+
+## For each artist, list down all of his/her albums (2nd way)
+For each artist, list down all of his/her albums with the following commands:
+
+```python
+from albums.models import Album
+from artists.models import Artist
+queryset = Artist.objects.all()
+for artist in queryset:
+    albums = artist.albums
+```
+## List down all albums ordered by cost then by name
+List down all albums ordered by cost then by name with the following commands:
+
+```python
+from albums.models import Album
+albums = Album.objects.all().order_by('cost', 'name')
+for album in albums:
+    print(album.id, album.name, album.cost)
+```
+
+### Results(id, name, cost):
+```shell
+80 album19 6.15
+100 album19 6.15
+79 album18 6.47
+99 album18 6.47
+78 album17 6.83
+98 album17 6.83
+77 album16 7.24
+97 album16 7.24
+76 album15 7.69
+96 album15 7.69
+75 album14 8.20
+95 album14 8.20
+74 album13 8.79
+94 album13 8.79
+73 album12 9.46
+93 album12 9.46
+72 album11 10.25
+92 album11 10.25
+71 album10 11.18
+91 album10 11.18
+70 album9 12.30
+90 album9 12.30
+69 album8 13.67
+89 album8 13.67
+68 album7 15.38
+88 album7 15.38
+67 album6 17.57
+87 album6 17.57
+66 album5 20.50
+86 album5 20.50
+65 album4 24.60
+85 album4 24.60
+64 album3 30.75
+84 album3 30.75
+63 album2 41.00
+83 album2 41.00
+62 album1 61.50
+82 album1 61.50
+61 album0 123.00
+81 album0 123.00
+```
