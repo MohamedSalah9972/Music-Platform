@@ -102,7 +102,7 @@ from albums.models import Album
 obj = Album.objects.all().latest('release_datetime')
 print(obj.name, obj.release_datetime, obj.cost)
 ```
-
+## Create some albums and assign them to any artists (1st way)
 ```python
 from artists.models import Artist
 from albums.models import Album
@@ -138,4 +138,18 @@ for i in range(20):
 <Album: Album object (78)>
 <Album: Album object (79)>
 <Album: Album object (80)>
+```
+
+## Create some albums and assign them to any artists (2nd way)
+```python
+from artists.models import Artist
+from albums.models import Album
+for i in range(20):
+    rand_artist = Artist.objects.order_by('?').first()
+    Album.objects.create(
+        artist=rand_artist,
+        name="album"+str(i),
+        release_datetime=datetime.date(2020, 1, i+1),
+        cost = 123/(i+1)
+    )
 ```
