@@ -188,9 +188,8 @@ Get all albums released before today with the following commands:
 
 ```python
 from albums.models import Album
-import datetime
-queryset = Album.objects.filter(release_datetime__lt=datetime.date.today())
-
+from django.utils import timezone
+queryset = Album.objects.filter(release_datetime__lt=timezone.now().date())
 for i in queryset:
     print(i.id, i.name, i.release_datetime)
 ```
