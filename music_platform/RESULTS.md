@@ -313,7 +313,7 @@ from albums.models import Album
 from artists.models import Artist
 queryset = Artist.objects.all()
 for artist in queryset:
-    albums = Album.objects.filter(artist_id=artist.pk) # what if the pk isn't the id (use artist=artist?)Ï
+    albums = Album.objects.filter(artist=artist)  # what if the pk isn't the id (use artist=artist?)Ï
 ```
 
 ## For each artist, list down all of his/her albums (2nd way)
