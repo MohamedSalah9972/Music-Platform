@@ -1,23 +1,29 @@
-#Shell queries
+# Shell queries
 
 Use the following command to use the shell
+
 ```
 python3 manage.py shell
 ```
+
 ## Create some random artists
 
 After run the shell command, create some random artists with the following commands:
+
 ```python
 from artists.models import Artist
 import string
 import random
+
 for i in range(20):
     letters = string.ascii_lowercase
     stage_name = ''.join(random.choice(letters) for _ in range(4))
     social_link = "https://www.facebook.com/" + stage_name
     Artist.objects.create(stage_name=stage_name, social_link=social_link)
 ```   
+
 ### results of the query
+
 ````
 <Artist: Artist object (1)>
 <Artist: Artist object (2)>
@@ -40,18 +46,20 @@ for i in range(20):
 <Artist: Artist object (19)>
 <Artist: Artist object (20)>
 ````
+
 ## List down all artists
 
 List down all artists with the following commands:
+
 ```python
 from artists.models import Artist
+
 queryset = Artist.objects.all()
 for artist in queryset:
     print(artist.id, artist.stage_name, artist.social_link)
 ```
 
 ### Results (id, stage name, social link)
-
 
 ```
 6 aspl https://www.facebook.com/aspl
@@ -82,6 +90,7 @@ List down all artists whose stage name starts with 'a' with the following comman
 
 ```python
 from artists.models import Artist
+
 queryset = Artist.objects.all().filter(stage_name__startswith='a')
 for artist in queryset:
     print(artist.id, artist.stage_name, artist.social_link)
@@ -93,22 +102,24 @@ for artist in queryset:
 6 aspl https://www.facebook.com/aspl
 ```
 
-
 ## Create some albums and assign them to any artists (1st way)
+
 ```python
 from artists.models import Artist
 from albums.models import Album
 import datetime
+
 for i in range(20):
     rand_artist = Artist.objects.order_by('?').first()
     rand_artist.albums.create(
-    name="album"+str(i),
-    release_datetime=datetime.date(2020, 1, i+1),
-    cost = 123/(i+1)
+        name="album" + str(i),
+        release_datetime=datetime.date(2020, 1, i + 1),
+        cost=123 / (i + 1)
     )
 ```
 
 ### Result of query:
+
 ```shell
 <Album: Album object (61)>
 <Album: Album object (62)>
@@ -133,20 +144,23 @@ for i in range(20):
 ```
 
 ## Create some albums and assign them to any artists (2nd way)
+
 ```python
 from artists.models import Artist
 from albums.models import Album
+
 for i in range(20):
     rand_artist = Artist.objects.order_by('?').first()
     Album.objects.create(
         artist=rand_artist,
-        name="album"+str(i),
-        release_datetime=datetime.date(2020, 1, i+1),
-        cost = 123/(i+1)
+        name="album" + str(i),
+        release_datetime=datetime.date(2020, 1, i + 1),
+        cost=123 / (i + 1)
     )
 ```
 
 ### Result of query:
+
 ```shell
 <Album: Album object (81)>
 <Album: Album object (82)>
@@ -171,29 +185,37 @@ for i in range(20):
 ```
 
 ## Get the latest released album
+
 Get the latest released album with the following commands:
 
 ```python
 from albums.models import Album
+
 obj = Album.objects.all().latest('release_datetime')
 print(obj.id, obj.name, obj.release_datetime, obj.cost)
 ```
+
 ### results(id, name, released date, cost):
+
 ```shell
 80 album19 2020-01-20 6.15
 ```
 
 ## Get all albums released before today
+
 Get all albums released before today with the following commands:
 
 ```python
 from albums.models import Album
 from django.utils import timezone
+
 queryset = Album.objects.filter(release_datetime__lt=timezone.now().date())
 for i in queryset:
     print(i.id, i.name, i.release_datetime)
 ```
+
 ### Results
+
 ```shell
 61 album0 2020-01-01
 62 album1 2020-01-02
@@ -238,11 +260,13 @@ for i in queryset:
 ```
 
 ## Get all albums released today or before but not after today
+
 Get all albums released today or before but not after today with the following commands:
 
 ```python
 from albums.models import Album
 import datetime
+
 queryset = Album.objects.filter(release_datetime__lte=datetime.date.today())
 
 for i in queryset:
@@ -250,6 +274,7 @@ for i in queryset:
 ```
 
 ### Results
+
 ```shell
 61 album0 2020-01-01
 62 album1 2020-01-02
@@ -294,49 +319,61 @@ for i in queryset:
 ```
 
 ## Count the total number of albums released so far
+
 Count the total number of albums released so far with the following commands:
 
 ```python
 from albums.models import Album
+
 Album.objects.count()
 ```
+
 ### Results
+
 ```shell
 40
 ```
 
 ## For each artist, list down all of his/her albums (1st way)
+
 For each artist, list down all of his/her albums with the following commands:
 
 ```python
 from albums.models import Album
 from artists.models import Artist
+
 queryset = Artist.objects.all()
 for artist in queryset:
     albums = Album.objects.filter(artist=artist)  # what if the pk isn't the id (use artist=artist?)Ï
 ```
 
 ## For each artist, list down all of his/her albums (2nd way)
+
 For each artist, list down all of his/her albums with the following commands:
 
 ```python
 from albums.models import Album
 from artists.models import Artist
+
 queryset = Artist.objects.all()
 for artist in queryset:
     albums = artist.albums.all()
 ```
+
 ## List down all albums ordered by cost then by name
+
 List down all albums ordered by cost then by name with the following commands:
 
 ```python
 from albums.models import Album
+
 albums = Album.objects.all().order_by('cost', 'name')
 for album in albums:
     print(album.id, album.name, album.cost)
 ```
 
 ### Results(id, name, cost):
+
 ```shell
 80 album19 6.15
 100 album19 6.15
