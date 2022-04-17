@@ -324,7 +324,7 @@ from albums.models import Album
 from artists.models import Artist
 queryset = Artist.objects.all()
 for artist in queryset:
-    albums = artist.albums
+    albums = artist.albums.all()
 ```
 ## List down all albums ordered by cost then by name
 List down all albums ordered by cost then by name with the following commands:
