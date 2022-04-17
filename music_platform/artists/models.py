@@ -7,4 +7,3 @@ class Artist(models.Model):
 
     class Meta:
         ordering = ['stage_name']  # ascending
-
