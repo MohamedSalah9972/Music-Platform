@@ -1,0 +1,27 @@
+{% load widget_tweaks %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+{% for field in form%}
+<div class="form-group">
+    {{field.label_tag}}
+    {% if form.is_bound %}
+        {% if field.errors %}
+            {% render_field field class="form-control is-invalid"%}
+            {% for error in field.errors%}
+                <div class="invalid-feedback"> {{error}} </div>
+            {% endfor %}
+        {%else%}
+            {% render_field field class="form-control is-valid"%}
+        {%endif%}
+    {%else%}
+        {% render_field field class="form-control "%}
+    {%endif%}
+
+
+</div>
+    {% if field.help_text %}
+    <small class="form-text text-muted">
+        {{field.help_text}}
+    </small>
+    {% endif %}
+{% endfor %}
