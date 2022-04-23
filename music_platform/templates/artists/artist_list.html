@@ -1,0 +1,25 @@
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <h1>Artist List</h1>
+  <ul>
+    {% for artist in artist_list %}
+        <li>id: {{artist.pk}}</li>
+
+        <li>Stage name: {{artist.stage_name}}</li>
+        <li>Social: {{artist.social_link}}</li>
+        <li>Albums: </li>
+
+          <ul>
+            {% for album in artist.albums.all %}
+            <li>id: {{album.id}}</li>
+            <li>Name: {{album.name}}</li>
+            <li>Creation Time: {{album.creation_datetime}} </li>
+            <li>Release datetime: {{album.release_datetime}}</li>
+            <li>Cost: {{album.cost}}</li>
+            <li>Is approved: {{album.is_approved}}</li>
+            {% endfor %}
+            </ul>
+    <br>
+    {% endfor %}
+  </ul>
