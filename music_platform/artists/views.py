@@ -26,5 +26,6 @@ class ArtistsDetailView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['artist_list'] = Artist.objects.prefetch_related('albums')
+        # how can I get the same result using related_select instead of prefetch_related
         return context
    
