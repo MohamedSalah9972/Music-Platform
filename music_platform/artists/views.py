@@ -5,6 +5,7 @@ from django.views.generic.list import ListView
 
 from .forms import ArtistForm
 from .models import Artist
+from albums.models import Album
 
 
 def create_artist(request):
@@ -24,5 +25,6 @@ class ArtistsDetailView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['artist_list'] = Artist.objects.prefetch_related('albums')
         return context
    
