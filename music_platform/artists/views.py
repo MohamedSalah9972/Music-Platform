@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import ArtistForm
 from .models import Artist
@@ -19,6 +20,11 @@ def create_artist(request):
     return render(request, 'artist.html', {'form': form})
 
 
+class ArtistCreateView(CreateView):
+    model = Artist
+    fields = ['stage_name', 'social_link']
+
+
 class ArtistsDetailView(ListView):
     model = Artist
     paginate_by = 100  # if pagination is desired
@@ -28,4 +34,3 @@ class ArtistsDetailView(ListView):
         context['artist_list'] = Artist.objects.prefetch_related('albums')
         # how can I get the same result using related_select instead of prefetch_related
         return context
-   
