@@ -4,21 +4,7 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .forms import ArtistForm
 from .models import Artist
-from albums.models import Album
-
-
-def create_artist(request):
-    if request.method == "POST":
-        form = ArtistForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('create_artists')
-    else:
-        form = ArtistForm()
-    return render(request, 'artist.html', {'form': form})
-
 
 class ArtistCreateView(CreateView):
     model = Artist
