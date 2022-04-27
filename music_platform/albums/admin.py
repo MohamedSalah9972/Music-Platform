@@ -18,4 +18,9 @@ class AlbumAdmin(admin.ModelAdmin):
     readonly_fields = ('creation_datetime',)
     form = AlbumForm
 
+
+class AlbumInline(admin.StackedInline):  # which is better, StackedInline or TabularInline?
+    model = Album
+
+
 admin.site.register(Album, AlbumAdmin)

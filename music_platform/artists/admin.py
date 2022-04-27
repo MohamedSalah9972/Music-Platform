@@ -3,11 +3,7 @@ from django.db.models import Count, Q
 
 from .models import Artist
 from albums.models import Album
-
-
-class AlbumInline(admin.StackedInline):  # which is better, StackedInline or TabularInline?
-    model = Album
-
+from albums.admin import AlbumInline
 
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ('stage_name', 'approved_albums')
