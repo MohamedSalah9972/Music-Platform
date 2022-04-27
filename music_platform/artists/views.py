@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
-from django.utils import timezone
-from django.views.generic.detail import DetailView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView
 
 from .models import Artist
 
+
+@method_decorator(login_required, name='dispatch')
 class ArtistCreateView(CreateView):
     model = Artist
     fields = ['stage_name', 'social_link']
