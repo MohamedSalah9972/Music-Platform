@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.forms import ModelForm
+from imagekit.admin import AdminThumbnail
 
-from .models import Album
+from .models import Album, Song
 
 
 class AlbumForm(ModelForm):
@@ -22,5 +23,7 @@ class AlbumAdmin(admin.ModelAdmin):
 class AlbumInline(admin.StackedInline):  # which is better, StackedInline or TabularInline?
     model = Album
 
-
+class SongAdmin(admin.ModelAdmin):
+    pass
 admin.site.register(Album, AlbumAdmin)
+admin.site.register(Song, SongAdmin)
