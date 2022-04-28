@@ -15,12 +15,13 @@ class AlbumForm(ModelForm):
         model = Album
         exclude = ()
 
+
 class SongInlineFormset(models.BaseInlineFormSet):
     def clean(self):
         count = 0
         for form in self.forms:
             try:
-                if form.cleaned_data:
+                if form.cleaned_data and not form.cleaned_data.get('DELETE', False):
                     count += 1
             except AttributeError:
                 pass
@@ -33,7 +34,6 @@ class SongInline(admin.StackedInline):
     extra = 0
     min_num = 1
     formset = SongInlineFormset
-
 
 
 class AlbumAdmin(admin.ModelAdmin):
