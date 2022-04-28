@@ -20,10 +20,9 @@ class AlbumAdmin(admin.ModelAdmin):
     form = AlbumForm
 
 
-class AlbumInline(admin.StackedInline):  # which is better, StackedInline or TabularInline?
-    model = Album
-
 class SongAdmin(admin.ModelAdmin):
     pass
+
+
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Song, SongAdmin)
