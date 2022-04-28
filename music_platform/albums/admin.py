@@ -1,5 +1,6 @@
 from django.contrib import admin
-from django.forms import ModelForm
+from django.forms import ModelForm, models
+from django import forms
 from imagekit.admin import AdminThumbnail
 
 from .models import Album, Song
@@ -14,10 +15,33 @@ class AlbumForm(ModelForm):
         model = Album
         exclude = ()
 
+class SongInlineFormset(models.BaseInlineFormSet):
+    def clean(self):
+        count = 0
+        for form in self.forms:
+            try:
+                if form.cleaned_data:
+                    count += 1
+            except AttributeError:
+                pass
+        if count < 1:
+            raise forms.ValidationError('You must have at least one Song')
+
+
+class SongInline(admin.StackedInline):
+    model = Song
+    extra = 0
+    min_num = 1
+    formset = SongInlineFormset
+
+
 
 class AlbumAdmin(admin.ModelAdmin):
     readonly_fields = ('creation_datetime',)
     form = AlbumForm
+    inlines = [
+        SongInline,
+    ]
 
 
 class SongAdmin(admin.ModelAdmin):
