@@ -37,7 +37,6 @@ class SongInline(admin.StackedInline):
 
 
 class AlbumAdmin(admin.ModelAdmin):
-    readonly_fields = ('creation_datetime',)
     form = AlbumForm
     inlines = [
         SongInline,
