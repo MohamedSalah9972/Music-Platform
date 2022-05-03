@@ -1,5 +1,5 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 from .forms import UserRegisterForm
 from django.views.generic.edit import CreateView
@@ -11,6 +11,12 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('signup')
     form_class = UserRegisterForm
 
+    def get_success_url(self):
+        return reverse('article-list')
+
 
 class LoginView(auth_views.LoginView):
     template_name = 'users/login.html'
+
+    def get_success_url(self):
+        return reverse('article-list')
