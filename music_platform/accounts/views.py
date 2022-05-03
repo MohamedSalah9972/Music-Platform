@@ -12,11 +12,11 @@ class SignUpView(CreateView):
     form_class = UserRegisterForm
 
     def get_success_url(self):
-        return reverse('article-list')
+        return reverse('artist-list')
 
 
 class LoginView(auth_views.LoginView):
     template_name = 'users/login.html'
 
     def get_success_url(self):
-        return reverse('article-list')
+        return reverse('artist-list')
