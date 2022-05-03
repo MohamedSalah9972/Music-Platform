@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView
 from .models import Album
@@ -8,3 +9,6 @@ from .models import Album
 class AlbumCreateView(CreateView):
     model = Album
     fields = ['artist', 'name', 'release_datetime', 'cost', 'is_approved']
+
+    def get_success_url(self):
+        return reverse('artist-list')
