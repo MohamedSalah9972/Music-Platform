@@ -21,17 +21,6 @@ class ArtistCreateView(CreateView):
         return reverse('artist-list')
 
 
-class ArtistsDetailView(ListView):
-    model = Artist
-    paginate_by = 100  # if pagination is desired
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['artist_list'] = Artist.objects.prefetch_related('albums')
-        # how can I get the same result using related_select instead of prefetch_related
-        return context
-
-
 class ArtistViewSet(generics.GenericAPIView):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
