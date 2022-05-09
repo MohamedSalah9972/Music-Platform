@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'imagekit',
     'rest_framework',
     'django_extensions',
+    'users',
 ]
 
 MIDDLEWARE = [
