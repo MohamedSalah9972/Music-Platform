@@ -7,9 +7,9 @@ from django.views.generic.edit import CreateView
 from rest_framework.response import Response
 
 from .models import Artist
-from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import ArtistSerializer
+from rest_framework import generics, permissions
 
 
 @method_decorator(login_required, name='dispatch')
@@ -32,14 +32,17 @@ class ArtistsDetailView(ListView):
         return context
 
 
-from rest_framework import generics, status, views, permissions
-
-
 class ArtistViewSet(generics.GenericAPIView):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
-    permission_classes = (permissions.AllowAny,)
     http_method_names = ['get', 'post']
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            permission_classes = [permissions.AllowAny]
+        else:  # POST
+            permission_classes = [permissions.IsAuthenticated]
+        return [permission() for permission in permission_classes]
 
     def get(self, request, format=None):
         artists = Artist.objects.all()
