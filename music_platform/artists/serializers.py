@@ -6,5 +6,5 @@ from .models import Artist
 class ArtistSerializer(serializers.ModelSerializer):
     class Meta:
         model = Artist
-        fields = ['stage_name', 'social_link']
+        fields = ['id', 'stage_name', 'social_link']
 
