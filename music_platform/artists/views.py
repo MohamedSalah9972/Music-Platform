@@ -25,14 +25,8 @@ class ArtistViewSet(generics.GenericAPIView):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
     http_method_names = ['get', 'post']
-
-    def get_permissions(self):
-        if self.request.method == 'GET':
-            permission_classes = [permissions.AllowAny]
-        else:  # POST
-            permission_classes = [permissions.IsAuthenticated]
-        return [permission() for permission in permission_classes]
-
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
     def get(self, request, format=None):
         artists = Artist.objects.all()
         serializer = ArtistSerializer(artists, many=True)
