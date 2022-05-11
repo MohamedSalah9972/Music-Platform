@@ -23,5 +23,6 @@ urlpatterns = [
     path('artists/', include('artists.urls')),
     path('albums/', include('albums.urls')),
     path('', include('accounts.urls')),
+    path('authentication/', include('authentication.urls')),
     path('api-auth/', include('rest_framework.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
