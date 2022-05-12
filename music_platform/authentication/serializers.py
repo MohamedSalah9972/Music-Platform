@@ -12,32 +12,30 @@ from django.core import exceptions
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(max_length=128, write_only=True)
-    password2 = serializers.CharField(max_length=128, write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'password1', 'password2', 'bio')
+        fields = ('id', 'username', 'email', 'bio')
 
 
 class RegisterSerializer(serializers.ModelSerializer):
-    password1 = serializers.CharField(max_length=128, write_only=True)
-    password2 = serializers.CharField(max_length=128, write_only=True)
+    confirmation_password = serializers.CharField(max_length=128, write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = ('username', 'email', 'password1', 'password2', 'bio')
+        fields = ('id', 'username', 'email', 'password','confirmation_password', 'bio')
+        extra_kwargs = {'password': {'write_only': True}}
 
     def validate(self, attrs):
-        password1 = attrs.pop('password1', '')
-        password2 = attrs.pop('password2', '')
+        password1 = attrs['password']
+        password2 = attrs['confirmation_password']
         if password1 and password2 and password1 != password2:
             raise ValidationError('password mismatch')
         return attrs
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(username=validated_data['username'], email=validated_data['email'],
-                                              password=validated_data['password1'], bio=validated_data['bio'])
+                                              password=validated_data['password'], bio=validated_data['bio'])
         return user
 
 
