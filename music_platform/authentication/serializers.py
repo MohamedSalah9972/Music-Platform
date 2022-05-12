@@ -26,14 +26,6 @@ class CustomUserSerializer(serializers.ModelSerializer):
             raise ValidationError('password mismatch')
         return attrs
 
-    def create(self, validated_data):
-        password = validated_data.pop('password1', '')
-        user = CustomUser.objects.create_user(**validated_data)
-        user.set_password(password)
-        print("passsss", password)
-        user.save()
-        return user
-
 
 class RegisterSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(max_length=128, write_only=True)
@@ -44,8 +36,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('username', 'email', 'password1', 'password2', 'bio')
 
     def create(self, validated_data):
-        user = CustomUser.objects.create_user(validated_data['username'], validated_data['email'],
-                                              validated_data['password1'])
+        user = CustomUser.objects.create_user(username=validated_data['username'], email=validated_data['email'],
+                                              password=validated_data['password1'], bio=validated_data['bio'])
         return user
 
 
