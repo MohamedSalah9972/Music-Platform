@@ -12,7 +12,6 @@ from django.core import exceptions
 
 
 class CustomUserSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = CustomUser
         fields = ('id', 'username', 'email', 'bio')
@@ -23,12 +22,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'password','confirmation_password', 'bio')
+        fields = ('id', 'username', 'email', 'password', 'confirmation_password', 'bio')
         extra_kwargs = {'password': {'write_only': True}}
 
     def validate(self, attrs):
         password1 = attrs['password']
         password2 = attrs['confirmation_password']
+        validators.validate_password(password1)
         if password1 and password2 and password1 != password2:
             raise ValidationError('password mismatch')
         return attrs
