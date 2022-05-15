@@ -25,6 +25,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'email', 'password', 'confirmation_password', 'bio')
         extra_kwargs = {'password': {'write_only': True}}
 
+    def clean_email(self):
+        return self.cleaned_data['email'].lower()
+
     def validate(self, attrs):
         password1 = attrs['password']
         password2 = attrs['confirmation_password']
@@ -34,7 +37,8 @@ class RegisterSerializer(serializers.ModelSerializer):
         return attrs
 
     def create(self, validated_data):
-        user = CustomUser.objects.create_user(username=validated_data['username'], email=validated_data['email'],
+        user = CustomUser.objects.create_user(username=validated_data['username'],
+                                              email=validated_data['email'],
                                               password=validated_data['password'], bio=validated_data['bio'])
         return user
 

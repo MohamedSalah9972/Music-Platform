@@ -41,6 +41,7 @@ class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
 
         serializer = CustomUserSerializer(instance=user, data=request.data)
         if serializer.is_valid():
+            serializer.validated_data['email'] = serializer.validated_data['email'].lower()
             serializer.save()
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -50,7 +51,7 @@ class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
         user_pk = self.request.data['id']
         if url_pk != user_pk:
             raise serializers.ValidationError({"detail": "You do not have permission to perform this action."})
-
+        request.data['email'] = request.data['email'].lower()
         user_response = self.partial_update(request, *args, **kwargs)
         return Response({
             "user": user_response.data
