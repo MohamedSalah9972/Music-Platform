@@ -40,10 +40,7 @@ class RegisterAPI(generics.GenericAPIView):
     queryset = CustomUser.objects.all()
 
     authentication_classes = [TokenAuthentication]
-
-    def get_permissions(self):
-        permission_classes = [permissions.AllowAny]
-        return [permission() for permission in permission_classes]
+    permission_classes = [permissions.AllowAny, ]
 
     def get(self, request, format=None):
         users = CustomUser.objects.all()
