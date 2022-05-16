@@ -23,7 +23,10 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('id', 'username', 'email', 'password', 'confirmation_password', 'bio')
-        extra_kwargs = {'password': {'write_only': True}}
+        extra_kwargs = {
+            'password': {'write_only': True},
+            'email': {"required": True}
+        }
 
     def clean_email(self):
         return self.cleaned_data['email'].lower()
