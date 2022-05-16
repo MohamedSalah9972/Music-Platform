@@ -1,5 +1,6 @@
 import pytest
 from authentication.serializers import RegisterSerializer
+from rest_framework.test import APIClient
 
 
 @pytest.fixture
@@ -15,3 +16,18 @@ def user():
     serializer.is_valid(raise_exception=True)
     user = serializer.save()
     return user
+
+
+@pytest.fixture
+def client():
+    return APIClient()
+
+
+@pytest.fixture
+def auth_client(user, client):
+    login_credentials = dict(
+        username="mohamed",
+        password="123456mM@",
+    )
+    client.post('/authentication/login/', login_credentials)
+    return client
