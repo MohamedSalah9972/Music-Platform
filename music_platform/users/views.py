@@ -16,12 +16,13 @@ from .permissions import IsOwnerOrReadOnly
 class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_object(self):
-        obj = get_object_or_404(CustomUser.objects.all(), pk=self.request.data['id'])
+        obj = get_object_or_404(CustomUser.objects.all(), pk=self.kwargs['pk'])
+        self.check_object_permissions(self.request, obj)
         return obj
 
     queryset = CustomUser.objects.all()
 
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
     authentication_classes = [TokenAuthentication]
     serializer_class = CustomUserSerializer
 
@@ -34,11 +35,6 @@ class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
 
     def put(self, request, *args, **kwargs):
         user = self.get_object()
-        url_pk = self.kwargs.get('pk')
-        user_pk = self.request.data['id']
-        if url_pk != user_pk:
-            raise serializers.ValidationError({"detail": "You do not have permission to perform this action."})
-
         serializer = CustomUserSerializer(instance=user, data=request.data)
         if serializer.is_valid():
             serializer.validated_data['email'] = serializer.validated_data['email'].lower()
@@ -47,10 +43,6 @@ class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, *args, **kwargs):
-        url_pk = self.kwargs.get('pk')
-        user_pk = self.request.data['id']
-        if url_pk != user_pk:
-            raise serializers.ValidationError({"detail": "You do not have permission to perform this action."})
         request.data['email'] = request.data['email'].lower()
         user_response = self.partial_update(request, *args, **kwargs)
         return Response({
