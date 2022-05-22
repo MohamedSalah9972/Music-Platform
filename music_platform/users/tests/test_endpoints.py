@@ -1,4 +1,6 @@
 import pytest
+from rest_framework.utils import json
+
 from users import models
 
 
@@ -66,11 +68,12 @@ def test_user_put_missing_field(user, auth_client):
 def test_user_patch(user, auth_client):
     payload = dict(
         username="x",
-        email="exw@ppp.com",
+        email="new@new.com",
         bio="new bio",
     )
-    response = auth_client.patch(f"/users/{user.id}/", payload)
+    response = auth_client.patch(f"/users/{user.id}/", json.dumps(payload), content_type='application/json')
     assert response.status_code == 200
+    assert response.data['user']['bio'] == payload['bio']
 
 
 @pytest.mark.django_db
@@ -92,7 +95,7 @@ def test_user_patch_invalid_permission(user, auth_client):
     )
 
     models.CustomUser.objects.create_user("mo", "ahmed@ggg.com", "123456mM@")
-    response = auth_client.patch(f"/users/{2}/", payload)
+    response = auth_client.patch(f"/users/{2}/", json.dumps(payload), content_type='application/json')
     assert response.status_code == 403
 
 
@@ -105,3 +108,9 @@ def test_user_patch_missing_field(user, auth_client):
 
     response = auth_client.patch(f"/users/{user.id}/", payload)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+def test_get_all_users(user, client):
+    response = client.get("/users/")
+    return response.status_code == 200
