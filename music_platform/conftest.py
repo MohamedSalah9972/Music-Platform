@@ -30,4 +30,5 @@ def auth_client(user, client):
         password="123456mM@",
     )
     client.post('/authentication/login/', login_credentials)
+    client.force_authenticate(user=user)
     return client

@@ -43,7 +43,9 @@ class UserAPIView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def patch(self, request, *args, **kwargs):
-        request.data['email'] = request.data['email'].lower()
+        print(type(request.data))
+        if 'email' in request.data:
+            request.data['email'] = request.data['email'].lower()
         user_response = self.partial_update(request, *args, **kwargs)
         return Response({
             "user": user_response.data
