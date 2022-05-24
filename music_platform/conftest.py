@@ -1,3 +1,5 @@
+import json
+
 import pytest
 from authentication.serializers import RegisterSerializer
 from rest_framework.test import APIClient
@@ -32,3 +34,13 @@ def auth_client(user, client):
     client.post('/authentication/login/', login_credentials)
     client.force_authenticate(user=user)
     return client
+
+
+@pytest.fixture
+def artist(auth_client):
+    payload = dict(
+        stage_name="newOne",
+        social_link="https://socail.com"
+    )
+    res = auth_client.post('/artists/', json.dumps(payload), content_type='application/json')
+    return res
