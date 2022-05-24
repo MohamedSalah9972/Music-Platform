@@ -24,7 +24,7 @@
         ``` 
 
 ## Guidelines
-7. **I should be able to run all your tests by only running `pytest` in the command line.**
+7. **Code organization:**
     * **(-5) Organize your related tests into classes:**
     ```
     class TestArtistEndpoint
