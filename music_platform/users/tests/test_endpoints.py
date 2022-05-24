@@ -30,7 +30,7 @@ def test_user_put(user, auth_client):
 
 
 @pytest.mark.django_db
-def test_user_unauthorized(user, client):
+def test_user_unauthenticated(user, client):
     payload = dict(
         username="x",
         email="emad@gmail.com",
@@ -77,7 +77,7 @@ def test_user_patch(user, auth_client):
 
 
 @pytest.mark.django_db
-def test_user_patch_unauthorized(user, client):
+def test_user_patch_unauthenticated(user, client):
     payload = dict(
         username="x",
         bio="new bio",

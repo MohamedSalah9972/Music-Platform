@@ -17,7 +17,7 @@ def test_post_artist(auth_client):
 
 
 @pytest.mark.django_db
-def test_post_artist_unauthorized(client):
+def test_post_artist_unauthenticated(client):
     payload = dict(
         stage_name="newOne",
         social_link="https://socail.com"
