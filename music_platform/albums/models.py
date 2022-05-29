@@ -7,6 +7,7 @@ from django.core.validators import FileExtensionValidator
 
 from django.utils import timezone
 from django.conf import settings
+from .managers import AlbumCustomManager
 
 
 class Album(TimeStampedModel):
@@ -15,6 +16,7 @@ class Album(TimeStampedModel):
     release_datetime = models.DateField(blank=False)
     cost = models.DecimalField(null=False, blank=False, max_digits=10, decimal_places=2)
     is_approved = models.BooleanField(default=False)
+    objects = AlbumCustomManager.as_manager()
 
 
 class Song(TimeStampedModel):
