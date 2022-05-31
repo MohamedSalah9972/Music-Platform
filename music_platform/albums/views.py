@@ -48,9 +48,9 @@ class AlbumFilter(filters.FilterSet):
         fields = ['cost__gte', 'cost__lte', 'name']
 
 
-class AlbumListCreateAPI(generics.ListAPIView):
+class AlbumListCreateAPI(generics.ListCreateAPIView):
     serializer_class = AlbumSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny, AuthenticatedArtist]
     filterset_class = AlbumFilter
 
     def get_queryset(self):
