@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+from .views import AlbumCreateView, AlbumListCreateAPI, GetCustomFilter
+
 urlpatterns = [
-    path('create/', views.AlbumCreateView.as_view(), name='create_albums'),
-    path('', views.AlbumViewSet.as_view(), name='album_view_set')
+    path('create/', AlbumCreateView.as_view(), name='create_albums'),  ##
+    path('', AlbumListCreateAPI.as_view(), name='album_list_create'),
+    path('custom/', GetCustomFilter.as_view(), name='get_custom_filter'),
 ]
