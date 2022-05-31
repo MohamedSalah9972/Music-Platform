@@ -8,10 +8,10 @@ class AlbumSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Album
-        fields = ['id', 'artist', 'name', 'release_datetime', 'cost']
+        fields = ['id', 'artist', 'name', 'release_datetime', 'cost', 'is_approved']
 
 
 class AlbumPostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Album
-        fields = ['id', 'artist', 'name', 'release_datetime', 'cost']
+        fields = ['id', 'artist', 'name', 'release_datetime', 'cost', 'is_approved']
