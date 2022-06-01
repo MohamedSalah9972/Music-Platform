@@ -1,6 +1,8 @@
 import json
 
 import pytest
+from django.urls import reverse
+
 from authentication.serializers import RegisterSerializer
 from rest_framework.test import APIClient
 
@@ -40,7 +42,22 @@ def auth_client(user, client):
 def artist(auth_client):
     payload = dict(
         stage_name="newOne",
-        social_link="https://socail.com"
+        social_link="https://socail.com",
+        user=1
     )
     res = auth_client.post('/artists/', json.dumps(payload), content_type='application/json')
     return res
+
+
+@pytest.fixture
+def album(auth_client, artist):
+    payload = dict(
+        artist=1,
+        name="Album",
+        release_datetime="2022-05-29",
+        cost="5.00",
+        is_approved=True
+    )
+    url = reverse('album_list_create')
+    response = auth_client.post(url, json.dumps(payload), content_type='application/json')
+    return response
