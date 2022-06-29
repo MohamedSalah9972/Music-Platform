@@ -20,6 +20,7 @@ class TestAlbumSerializers:
         serializer = AlbumPostSerializer(data=valid_serializer_data)
         assert not serializer.is_valid()
 
+    # you're passing artisit and don't use it
     @pytest.mark.django_db
     def test_get_serializer_valid(self, artist):
         valid_serializer_data = dict(artist=1, name='Album', release_datetime='2022-05-29', cost='5.00',

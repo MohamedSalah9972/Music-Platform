@@ -29,15 +29,17 @@ def client():
 
 @pytest.fixture
 def auth_client(user, client):
+    # i see this as a duplicate, please use factories
     login_credentials = dict(
         username="mohamed",
         password="123456mM@",
     )
+    #  i don't see the point of this, can you explain more
     client.post('/authentication/login/', login_credentials)
     client.force_authenticate(user=user)
     return client
 
-
+# search using factories to create instances
 @pytest.fixture
 def artist(auth_client):
     payload = dict(
@@ -48,6 +50,7 @@ def artist(auth_client):
     res = auth_client.post('/artists/', json.dumps(payload), content_type='application/json')
     return res
 
+# i'm not sure you're testing this right, you're passing artist you don't use, just to have in the backend an artisit with id==1, imagine we have different way of setting the ids, it will fail, it's better to use  artist = artist.id
 
 @pytest.fixture
 def album(auth_client, artist):

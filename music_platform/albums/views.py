@@ -50,9 +50,10 @@ class AlbumFilter(filters.FilterSet):
 
 class AlbumListCreateAPI(generics.ListCreateAPIView):
     serializer_class = AlbumSerializer
+    # due to precedence the last class is not used
     permission_classes = [permissions.AllowAny, AuthenticatedArtist]
     filterset_class = AlbumFilter
-
+    
     def get_queryset(self):
         return Album.objects.approved_albums().all()
 
